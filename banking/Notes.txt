@@ -1,0 +1,302 @@
+Users:
+======
+userId
+userName
+password
+mobileNumber
+emailId
+gender
+dateOfBirth
+createdOn
+lastModifiedOn
+
+
+Accounts:
+=========
+accountId
+accountType
+accountNumber
+branchName
+isActive
+ifscCode
+hasATMCard
+balance
+createdOn
+lastModifiedOn
+
+
+Transactions:
+=============
+transactionId
+fromAccount
+toAccount
+amount
+serviceType(ATM, UPI, Netbanking)
+comments
+isCompletedForFromAccount
+isCompletedForToAccount
+isCompleted
+createdOn
+
+
+Transaction
+atm - credit, debit using synchronization concept
+upi - sending money to another person with comments using synchronization concept - just like G-Pay
+
+Account
+CRUD Operations
+InActive the account
+updateBalance with time
+
+User
+CRUD Operations
+
+select * from users;
+
+select * from accounts;
+
+select * from transactions;
+
+select * from piggy_banks;
+
+select * from piggy_transactions;
+
+select * from recipients;
+
+select * from goals;
+
+
+
+
+Money transfer between accounts inside the bank. This type of transaction has both sender and receiver accounts.
+Money withdrawal. This type of transaction has only an account from which money has been withdrawn.
+Money deposit. This type of transaction has only an account to which money has been deposited.
+Paying for services. This type of transaction has an account and service type that was paid for.
+
+Swagger-generated POJOs
+JPA Buddy
+Flyway migrations and Liquibase
+
+
+by default, rollback happens for runtime, unchecked exceptions only. We can, of course, 
+configure this behavior with the rollbackFor and noRollbackFor annotation parameters.
+Spring creates proxies for all the classes annotated with @Transactional
+
+
+
+JWT - JSON Web Token
+=====================
+[header].[payload].[signature]
+The token is mainly composed of header, payload, signature. These three parts are separated by dots(.)
+securely transfer information over the web between two parties
+used for an authentication system
+used for information exchange
+comes in two forms - Serialized, Deserialized
+Serialized - transfer the data through the network with each request and response
+Deserialized - read and write data to the web token
+
+Header
+======
+contains data about media/content type we are sending
+This information is present as a json object then this json object is encoded to BASE64URL.
+HS256 and RS256 are the two main algorithm
+
+Payload (Claims)
+
+Algorithm algorithm = Algorithm.HMAC256("secret-key");
+JWTVerifier verifier = JWT.require(algorithm)
+  .withIssuer("Baeldung")
+  .build();
+
+// To create a JWT
+String jwtToken = JWT.create()
+  .withIssuer("Baeldung")
+  .withSubject("Baeldung Details")
+  .withClaim("userId", "1234")
+  .withIssuedAt(new Date())
+  .withExpiresAt(new Date(System.currentTimeMillis() + 5000L))
+  .withJWTId(UUID.randomUUID()
+    .toString())
+  .withNotBefore(new Date(System.currentTimeMillis() + 1000L))
+  .sign(algorithm);
+
+// to verify a JWT
+try {
+    DecodedJWT decodedJWT = verifier.verify(jwtToken);
+} catch (JWTVerificationException e) {
+    System.out.println(e.getMessage());
+}
+
+
+// to obtain the custom claims
+Claim claim = decodedJWT.getClaim("userId");
+String userId = claim.asString();
+
+
+5432
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/shopme
+spring.datasource.username=postgres
+spring.datasource.password=123
+
+<seconds> <minutes> <hours> <day-of-month> <month> <day-of-week> <year>
+0-59	   0-59	     0-23	1-31	     1-12   0-6(0=SUN)
+
+* * * 24  4  TUESDAY
+
+@Scheduled(cron = "@hourly")
+
+@yearly or annualy
+Once a year
+@monthly
+Once a month
+@weekly
+Once a week
+@daily
+Once per day
+@midnight
+Once per day at midnight
+@hourly
+Once per hour
+
+taskRegistrar.addCronTask(new CronTask(goalServiceExecutor, "1 * * * * *"));
+
+    public void scheduleGoal() throws BussinessException {
+        List<Goal> allGoals = goalService.findAllGoals();
+        Predicate<Goal> todayGoalFilter = goal -> {
+            String frequency = goal.getFrequency();
+            LocalDate today = LocalDate.now();
+            int dayOfMonth = goal.getDayOfMonth();
+            int dayOfWeek = goal.getDayOfWeek();
+            boolean once = GoalFrequency.ONCE.toString().equalsIgnoreCase(frequency);
+            boolean weekly = GoalFrequency.WEEKLY.toString().equalsIgnoreCase(frequency) && dayOfWeek == today.getDayOfWeek().getValue() && !once;
+            boolean monthly = GoalFrequency.MONTHLY.toString().equalsIgnoreCase(frequency) && dayOfMonth == today.getDayOfMonth()  && !once;
+            boolean daily = GoalFrequency.DAILY.toString().equalsIgnoreCase(frequency) && !once;
+            return daily || weekly || monthly;
+        };
+        List<Goal> todayGoals = allGoals.stream().filter(todayGoalFilter).toList();
+        todayGoals.forEach(goalService::addGoal);
+    }
+
+s3
+sns
+sqs
+secrets manager
+redis
+service discovery
+micro services
+
+scalability, data availability
+Amazon Simple Notification Service (Amazon SNS), Amazon Simple Queue Service (Amazon SQS)
+
+https://docs.aws.amazon.com/index.html
+
+Amazon S3
+=========
+Amazon S3 is an object storage service that stores data as objects within buckets. An object is a file and any metadata that describes the file. A bucket is a container for objects.
+
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html
+https://docs.aws.amazon.com/sns/latest/dg/welcome.html
+
+Microservice:
+=============
+independent deployment
+scaling is comparatively less than the monolithic architecture
+minimizes the impact on existing service.
+possible to change or upgrade each service individually
+single responsibility principle
+Less dependency and easy to test
+demanding service can be deployed on multiple servers to enhance performance.
+
+API Gateway:
+============
+1. Authentication
+2. load balancing and circuit breaking
+3. protocol breaking and service discovery
+4. Monitoring, Logging, Analytics and Billing
+5. Caching
+
+1. Client sends the request to the API Gateway. Request may be Http Reuqest like REST, GraphQL
+2. API Gateway validates the request
+3. It checks the Client IP address and also checks Allow list and Deny list against request headers
+4. It will forward the request to Identity Provider for Authentication and Authorization
+5. Rate limit
+6. Dynamic Routing 
+7. Service Discovery
+8. Protocol Conversion
+
+
+Throttling
+
+
+
+
+SNS:
+====
+Publisher and Subscriber
+Allows to connect millions of consumers(Email, Http Endpoint, SQS, Text)
+Fully managed and durable with automatic scaling
+Consist of topics and subscriptions
+Application to Person or Application to Application
+
+
+SQS:
+====
+Consumers can choose the rate of processing
+Fire and forget - publishers have no idea about cilent processing
+Guaranteed processing
+Application Decoupling
+Message size is 256kb
+Dead Letter Queue - For processing failed messages
+
+Standard Queue:
+---------------
+Message order is not maintained
+There is a chance that user can get one message multiple time in rarely cases.
+Unlimited throughput
+
+FIFO Queue:
+-----------
+Message order is maitained
+Exactly once processing
+300 TPS Max(Transaction Per Second)[3000 with batching]
+More expensive
+
+
+
+
+
+com.ecommerce
+
+E-Commerce project for User
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

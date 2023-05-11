@@ -1,0 +1,25 @@
+account_name
+legal_entity_type
+street
+city
+country
+
+postal_code
+state_or_province
+pin_code / zip_code
+
+identification_type - drivers_license, social_security_number, green_card, passport, visa
+identification_value
+
+terms_and_conditions_accepted - true / false
+
+account_id
+status - enabled, disabled
+created_at - timestamp
+updated_at - timestamp
+
+
+bank_account_verified
+
+
+

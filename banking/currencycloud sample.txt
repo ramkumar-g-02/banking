@@ -1,0 +1,121 @@
+curl -X POST https://devapi.currencycloud.com/v2/accounts/create \
+-H 'X-Auth-Token: XXXX-XXXX-XXXX' \
+-F 'account_name="Finstack2"' \
+-F 'legal_entity_type="individual"' \
+-F 'street="308, Ramnagar"' \
+-F 'city="Coimbatore"' \
+-F 'postal_code="641009"' \
+-F 'country="India"' \
+-F 'api_trading="true"' \
+-F 'online_trading="true"' \
+-F 'phone_trading="true"' \
+-F 'identification_type="national_id"' \
+-F 'identification_value="54317228"' \
+-F 'terms_and_conditions_accepted="true"'
+
+{
+  "error_code": "account_create_failed",
+  "error_messages": {
+    "country": [
+      {
+        "code": "country_is_in_invalid_format",
+        "message": "country is not a valid ISO 3166-1 Alpha-2 country code",
+        "params": {
+          "type": "country_code"
+        }
+      }
+    ]
+  }
+}
+
+{
+  "id": "4ee81189-9fcc-4141-a635-db3ff2cba17a",
+  "account_name": "Finstack2",
+  "brand": "currencycloud",
+  "your_reference": null,
+  "status": "enabled",
+  "street": "308, Ramnagar",
+  "city": "Coimbatore",
+  "state_or_province": null,
+  "country": "IN",
+  "postal_code": "641009",
+  "spread_table": "flat_0.00",
+  "legal_entity_type": "individual",
+  "created_at": "2023-04-20T04:49:55.000Z",
+  "updated_at": "2023-04-20T04:49:55.000Z",
+  "identification_type": "national_id",
+  "identification_value": "54317228",
+  "short_reference": "230420-78267",
+  "api_trading": true,
+  "online_trading": true,
+  "phone_trading": true,
+  "process_third_party_funds": false,
+  "settlement_type": "net",
+  "agent_or_reliance": false,
+  "terms_and_conditions_accepted": null,
+  "bank_account_verified": "not required"
+}
+
+
+{
+  "error_code": "permission_denied",
+  "error_messages": {
+    "base": [
+      {
+        "code": "permission_denied",
+        "message": "You do not have permission 'payment_charges_management' to perform this operation",
+        "params": {}
+      }
+    ]
+  }
+}
+
+ea689ee5-b7e0-4042-b14c-74c56d2e73b6
+c53e9e5a-9d3b-43ce-b880-1215552c7e90
+
+
+4ee81189-9fcc-4141-a635-db3ff2cba17a
+f7a6b094-e583-4566-9cd5-b8e1daf4ce7e
+
+{
+    "id": "dbb79522-7df8-4817-871d-833c4e694854",
+    "bank_account_holder_name": "My Test Account Holder",
+    "name": "My Test Beneficiary 61f7f28159f04",
+    "email": null,
+    "payment_types": [
+        "regular"
+    ],
+    "beneficiary_address": [],
+    "beneficiary_country": null,
+    "beneficiary_entity_type": null,
+    "beneficiary_company_name": null,
+    "beneficiary_first_name": null,
+    "beneficiary_last_name": null,
+    "beneficiary_city": null,
+    "beneficiary_postcode": null,
+    "beneficiary_state_or_province": null,
+    "beneficiary_date_of_birth": null,
+    "beneficiary_identification_type": null,
+    "beneficiary_identification_value": null,
+    "bank_country": "GB",
+    "bank_name": "TEST BANK NAME",
+    "bank_account_type": null,
+    "currency": "GBP",
+    "account_number": "32847346",
+    "routing_code_type_1": "sort_code",
+    "routing_code_value_1": "101193",
+    "routing_code_type_2": null,
+    "routing_code_value_2": null,
+    "bic_swift": null,
+    "iban": null,
+    "default_beneficiary": "false",
+    "creator_contact_id": "a66ca63f-e668-47af-8bb9-74363240d781",
+    "bank_address": [
+        "TEST BANK ADDRESS",
+        " NOT USING EXTERNAL SERVICE",
+        " DEVELOPMENT ENVIRONMENT."
+    ],
+    "created_at": "2022-01-31T14:30:35+00:00",
+    "updated_at": "2022-01-31T14:30:35+00:00",
+    "beneficiary_external_reference": null
+}
