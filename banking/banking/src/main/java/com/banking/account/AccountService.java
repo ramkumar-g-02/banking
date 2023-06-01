@@ -25,7 +25,7 @@ public class AccountService {
             throw new BussinessException("IFSC Code is mandatory");
         }
         Optional<User> user = userRepository.findById(accountDTO.getUserId());
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             throw new BussinessException("User does not exist");
         }
         Account existingAccount = accountRepository.findByUser_UserId(accountDTO.getUserId());
